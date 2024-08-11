@@ -24,10 +24,21 @@ import java.time.format.DateTimeFormatter;
 @WebServlet(name = "LoadWifiServlet", value = "/load-wifi.jsp")
 public class LoadWifiServlet extends HttpServlet {
 
+    String apiKey = readApiKey();
+
+    private String readApiKey() {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/META-INF/OpenAPI_Key.txt")))) {
+            return br.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
-        urlBuilder.append("/" + URLEncoder.encode("api_key","UTF-8") ); /*인증키*/
+        urlBuilder.append("/" + URLEncoder.encode(apiKey,"UTF-8") ); /*인증키*/
         urlBuilder.append("/" + URLEncoder.encode("xml","UTF-8") ); /*요청파일타입 (xml,xmlf,xls,json) */
         urlBuilder.append("/" + URLEncoder.encode("TbPublicWifiInfo","UTF-8")); /*서비스명 (대소문자 구분 필수입니다.)*/
         urlBuilder.append("/" + URLEncoder.encode("1","UTF-8")); /*요청시작위치*/

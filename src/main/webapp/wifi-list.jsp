@@ -87,7 +87,6 @@
             window.location.href = 'wifi-list.jsp';
         }
     </script>
-
     <title>와이파이 정보 구하기</title>
 </head>
 

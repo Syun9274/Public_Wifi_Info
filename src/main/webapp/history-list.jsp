@@ -51,6 +51,7 @@
                 body: params.toString()
             })
 
+            window.location.href = 'history-list.jsp';
         }
     </script>
 

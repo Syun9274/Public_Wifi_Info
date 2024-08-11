@@ -37,10 +37,9 @@ public class HistoryDAO {
         em.getTransaction().begin();
 
         try {
-            // ID를 사용하여 History 엔티티를 찾음
             History history = em.find(History.class, id);
             if (history != null) {
-                // 엔티티가 존재하면 삭제
+
                 em.remove(history);
                 em.getTransaction().commit();
             } else {

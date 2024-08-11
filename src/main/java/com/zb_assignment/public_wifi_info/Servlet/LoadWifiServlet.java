@@ -25,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 public class LoadWifiServlet extends HttpServlet {
 
     String apiKey = readApiKey();
+    int BATCH_SIZE = 1000;
 
     private String readApiKey() {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/META-INF/OpenAPI_Key.txt")))) {
@@ -35,15 +36,13 @@ public class LoadWifiServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+    private StringBuilder callApiData(String startIndex, String endIndex) throws IOException {
         StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
         urlBuilder.append("/" + URLEncoder.encode(apiKey,"UTF-8") ); /*인증키*/
         urlBuilder.append("/" + URLEncoder.encode("xml","UTF-8") ); /*요청파일타입 (xml,xmlf,xls,json) */
         urlBuilder.append("/" + URLEncoder.encode("TbPublicWifiInfo","UTF-8")); /*서비스명 (대소문자 구분 필수입니다.)*/
-        urlBuilder.append("/" + URLEncoder.encode("1","UTF-8")); /*요청시작위치*/
-        urlBuilder.append("/" + URLEncoder.encode("140","UTF-8")); /*요청종료위치*/
+        urlBuilder.append("/" + URLEncoder.encode(startIndex,"UTF-8")); /*요청시작위치*/
+        urlBuilder.append("/" + URLEncoder.encode(endIndex,"UTF-8")); /*요청종료위치*/
         // 상위 5개는 필수적으로 순서바꾸지 않고 호출해야 합니다.
 
         URL url = new URL(urlBuilder.toString());
@@ -68,24 +67,82 @@ public class LoadWifiServlet extends HttpServlet {
         rd.close();
         conn.disconnect();
 
-        String listTotalCount = parseAndSaveData(sb.toString());
+        return sb;
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        int startIndex = 1;
+        int endIndex = BATCH_SIZE;
+
+        StringBuilder sb = callApiData(Integer.toString(startIndex), Integer.toString(endIndex));;
+        parseAndSaveData(sb.toString());
+
+        String totalDataCount = parseTotalCount(sb.toString());
+
+        startIndex = endIndex + 1;
+        while(startIndex < Integer.parseInt(totalDataCount)) {
+            endIndex = Math.min(startIndex + BATCH_SIZE - 1, Integer.parseInt(totalDataCount));
+
+            sb = callApiData(Integer.toString(startIndex), Integer.toString(endIndex));
+            parseAndSaveData(sb.toString());
+
+            startIndex = endIndex + 1;
+        }
+
+        // 응답 콘텐츠 타입 설정
+        resp.setContentType("text/html;charset=UTF-8");
+
+        // 응답을 작성하기 위한 PrintWriter 얻기
+        try (PrintWriter out = resp.getWriter()) {
+            // HTML 콘텐츠 작성
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>와이파이 정보 구하기</title>");
+            out.println("<style>");
+            out.println(".spacing { text-align: center; margin-top: 20px; }");
+            out.println("</style>");
+            out.println("</head>");
+            out.println("<body>");
+            out.printf("<h1 class=\"spacing\">%s개의 wifi 정보를 정상적으로 저장하였습니다.</h1>\n", totalDataCount);
+            out.println("<div class=\"spacing\">");
+            out.println("<a href=\"index.jsp\">홈으로 가기</a>");
+            out.println("</div>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+
 
 //        req.setAttribute("listTotalCount", listTotalCount);
 //        req.getRequestDispatcher("/load-wifi.jsp").forward(req, resp);
     }
 
-    public String parseAndSaveData(String xmlContent) {
-        WifiDAO wifiDAO = new WifiDAO();
+    public String parseTotalCount(String xmlContent) {
         String listTotalCount = "0";
 
         try {
-            // XML 파서 설정
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(new InputSource(new StringReader(xmlContent)));
 
             Element root = doc.getDocumentElement();
             listTotalCount = root.getElementsByTagName("list_total_count").item(0).getTextContent();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listTotalCount;
+    }
+
+    public void parseAndSaveData(String xmlContent) {
+        WifiDAO wifiDAO = new WifiDAO();
+
+        try {
+            // XML 파서 설정
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(new InputSource(new StringReader(xmlContent)));
 
             // 모든 <row> 엘리먼트를 가져옴
             NodeList nodeList = doc.getElementsByTagName("row");
@@ -125,7 +182,5 @@ public class LoadWifiServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return listTotalCount;
     }
 }

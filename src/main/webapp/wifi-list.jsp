@@ -132,10 +132,12 @@
         WifiDAO wifiDAO = new WifiDAO();
         List<Wifi> dataList = wifiDAO.getAllWifi();
 
+        int count = 0;
         for (Wifi wifi : dataList) {
+            if (count >= 20) break;
     %>
     <tr>
-        <td><%= 0 %></td>
+        <td><%= 0.0 %></td>
         <td><%= wifi.getMGR_NO() %></td>
         <td><%= wifi.getWRDOFC() %></td>
         <td><%= wifi.getMAIN_NM() %></td>
@@ -154,6 +156,7 @@
         <td><%= wifi.getWORK_DTTM() %></td>
     </tr>
     <%
+            count++;
         }
     %>
 </table>

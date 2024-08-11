@@ -19,7 +19,7 @@
   <body>
 
   <h1>
-    ${listTotalCount}개의 WIFI 정보를 정상적으로 저장하였습니다.
+    <c:out value= "${listTotalCount}"/>개의 WIFI 정보를 정상적으로 저장하였습니다.
   </h1>
 
   <div class="spacing">

@@ -22,11 +22,12 @@
 - [x] Open API 연결 및 호출
 - [x] Open API 호출로 불러온 값을 DB에 저장
 - [x] UI 배치
-- [ ] DB 데이터를 화면에 띄워서 보여주기
+- [x] DB 데이터를 화면에 띄워서 보여주기
 - [x] 버튼 한번으로 현재 위치의 위도 경도 불러오기
 - [ ] 위도 경도 값을 토대로 주변 wifi를 가까운 순서대로 정렬하기
-- [ ] 검색 history 데이터 삽입하기
-- [ ] history table 속 데이터 선택 삭제하기
+- [x] 검색 history 데이터 삽입하기
+- [x] history table 속 데이터 선택 삭제하기
+- [ ] history 데이터 삭제 후 자동 페이지 새로고침
 
 ### 발견된 문제점
 
@@ -38,4 +39,3 @@
     - `javax.servlet.ServletException`에 따르면 위의 2번 코드에서 예외가 발생했다고 한다.
 2. `load-wifi.jsp`에 접속하면 연동된 `LoadWifiServlet.java`가 무한루프에 빠진다.
    - 이때, OpenAPI 호출과 DB 데이터 삽입은 정상적으로 작동된다.
-

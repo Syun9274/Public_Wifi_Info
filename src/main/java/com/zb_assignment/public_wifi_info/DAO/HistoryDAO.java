@@ -12,15 +12,15 @@ public class HistoryDAO {
 
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("public_wifi_info");
 
-    public void saveHistory(double xPos, double yPos, LocalDateTime date) {
+    public void saveHistory(double lat, double lnt, LocalDateTime date) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
         try {
             History history = new History();
 
-            history.setxPos(xPos);
-            history.setyPos(yPos);
+            history.setLat(lat);
+            history.setLnt(lnt);
             history.setDate(date);
 
             em.persist(history);
@@ -31,6 +31,29 @@ public class HistoryDAO {
             em.close();
         }
     }
+
+    public void deleteHistoryById(int id) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        try {
+            // ID를 사용하여 History 엔티티를 찾음
+            History history = em.find(History.class, id);
+            if (history != null) {
+                // 엔티티가 존재하면 삭제
+                em.remove(history);
+                em.getTransaction().commit();
+            } else {
+                em.getTransaction().rollback();
+            }
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
 
     public List<History> getAllHistory() {
         EntityManager em = emf.createEntityManager();

@@ -14,30 +14,34 @@ public class History {
     private int id;
 
     @NotNull
-    private double xPos;
+    private double lat;
 
     @NotNull
-    private double yPos;
+    private double lnt;
 
     @NotNull
     private LocalDateTime date;
 
 
     // Getter and Setter
-    public double getxPos() {
-        return xPos;
+    public int getId() {
+        return id;
     }
 
-    public void setxPos(double xPos) {
-        this.xPos = xPos;
+    public double getLat() {
+        return lat;
     }
 
-    public double getyPos() {
-        return yPos;
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
-    public void setyPos(double yPos) {
-        this.yPos = yPos;
+    public double getLnt() {
+        return lnt;
+    }
+
+    public void setLnt(double lnt) {
+        this.lnt = lnt;
     }
 
     public LocalDateTime getDate() {

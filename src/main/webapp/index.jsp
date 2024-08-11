@@ -63,6 +63,26 @@
           break;
       }
     }
+
+    function fetchWifiInfo() {
+      const lat = document.getElementById("lat").value;
+      const lnt = document.getElementById("lnt").value;
+
+      const params = new URLSearchParams({ lat, lnt });
+
+      fetch('fetchWifiInfo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params.toString()
+      })
+      // .then(response => response.text())
+      // .then(data => alert(data))
+      // .catch(error => console.error('Error:', error));
+
+      window.location.href = 'wifi-list.jsp';
+    }
   </script>
 
   <title>와이파이 정보 구하기</title>
@@ -101,9 +121,13 @@
     <th>망 종류</th>
     <th>설치년도</th>
     <th>실내외구분</th>
+    <th>WIFI 접속환경</th>
+    <th>LAT</th>
+    <th>LNT</th>
+    <th>작업일자</th>
   </tr>
   <tr>
-    <td colspan="13">위치 정보를 입력한 후에 조회해 주세요</td>
+    <td colspan="17">위치 정보를 입력한 후에 조회해 주세요</td>
   </tr>
 </table>
 

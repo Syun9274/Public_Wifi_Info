@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class WifiDAO {
 
@@ -59,6 +60,19 @@ public class WifiDAO {
         } finally {
             em.close();
         }
+    }
+
+    public List<Wifi> getAllWifi() {
+        EntityManager em = emf.createEntityManager();
+        List<Wifi> dataList;
+
+        try {
+            dataList = em.createQuery("select w from Wifi w", Wifi.class).getResultList();
+        } finally {
+            em.close();
+        }
+
+        return dataList;
     }
 
     // 예제 데이터 삽입

@@ -59,21 +59,12 @@ public class Wifi {
     private LocalDateTime WORK_DTTM;
 
 
-    // Getter and Setter
-    public String getADRES1() {
-        return ADRES1;
+    public String getMGR_NO() {
+        return MGR_NO;
     }
 
-    public void setADRES1(String ADRES1) {
-        this.ADRES1 = ADRES1;
-    }
-
-    public String getMAIN_NM() {
-        return MAIN_NM;
-    }
-
-    public void setMAIN_NM(String MAIN_NM) {
-        this.MAIN_NM = MAIN_NM;
+    public void setMGR_NO(String MGR_NO) {
+        this.MGR_NO = MGR_NO;
     }
 
     public String getWRDOFC() {
@@ -84,92 +75,28 @@ public class Wifi {
         this.WRDOFC = WRDOFC;
     }
 
-    public String getMGR_NO() {
-        return MGR_NO;
+    public String getMAIN_NM() {
+        return MAIN_NM;
     }
 
-    public void setMGR_NO(String MGR_NO) {
-        this.MGR_NO = MGR_NO;
+    public void setMAIN_NM(String MAIN_NM) {
+        this.MAIN_NM = MAIN_NM;
     }
 
-    public LocalDateTime getWORK_DTTM() {
-        return WORK_DTTM;
+    public String getADRES1() {
+        return ADRES1;
     }
 
-    public void setWORK_DTTM(LocalDateTime WORK_DTTM) {
-        this.WORK_DTTM = WORK_DTTM;
+    public void setADRES1(String ADRES1) {
+        this.ADRES1 = ADRES1;
     }
 
-    public double getLNT() {
-        return LNT;
+    public String getADRES2() {
+        return ADRES2;
     }
 
-    public void setLNT(double LNT) {
-        this.LNT = LNT;
-    }
-
-    public double getLAT() {
-        return LAT;
-    }
-
-    public void setLAT(double LAT) {
-        this.LAT = LAT;
-    }
-
-    public String getREMARS3() {
-        return REMARS3;
-    }
-
-    public void setREMARS3(String REMARS3) {
-        this.REMARS3 = REMARS3;
-    }
-
-    public String getINOUT_DOOR() {
-        return INOUT_DOOR;
-    }
-
-    public void setINOUT_DOOR(String INOUT_DOOR) {
-        this.INOUT_DOOR = INOUT_DOOR;
-    }
-
-    public int getCNSTC_YEAR() {
-        return CNSTC_YEAR;
-    }
-
-    public void setCNSTC_YEAR(int CNSTC_YEAR) {
-        this.CNSTC_YEAR = CNSTC_YEAR;
-    }
-
-    public String getCMCWR() {
-        return CMCWR;
-    }
-
-    public void setCMCWR(String CMCWR) {
-        this.CMCWR = CMCWR;
-    }
-
-    public String getSVC_SE() {
-        return SVC_SE;
-    }
-
-    public void setSVC_SE(String SVC_SE) {
-        this.SVC_SE = SVC_SE;
-    }
-
-    public String getINSTL_MBY() {
-        return INSTL_MBY;
-    }
-
-    public void setINSTL_MBY(String INSTL_MBY) {
-        this.INSTL_MBY = INSTL_MBY;
-    }
-
-    public String getINSTL_TY() {
-        return INSTL_TY;
-    }
-
-    public void setINSTL_TY(String INSTL_TY) {
-        this.INSTL_TY = INSTL_TY;
+    public void setADRES2(String ADRES2) {
+        this.ADRES2 = ADRES2;
     }
 
     public String getINSTL_FLOOR() {
@@ -180,11 +107,83 @@ public class Wifi {
         this.INSTL_FLOOR = INSTL_FLOOR;
     }
 
-    public String getADRES2() {
-        return ADRES2;
+    public String getINSTL_TY() {
+        return INSTL_TY;
     }
 
-    public void setADRES2(String ADRES2) {
-        this.ADRES2 = ADRES2;
+    public void setINSTL_TY(String INSTL_TY) {
+        this.INSTL_TY = INSTL_TY;
+    }
+
+    public String getINSTL_MBY() {
+        return INSTL_MBY;
+    }
+
+    public void setINSTL_MBY(String INSTL_MBY) {
+        this.INSTL_MBY = INSTL_MBY;
+    }
+
+    public String getSVC_SE() {
+        return SVC_SE;
+    }
+
+    public void setSVC_SE(String SVC_SE) {
+        this.SVC_SE = SVC_SE;
+    }
+
+    public String getCMCWR() {
+        return CMCWR;
+    }
+
+    public void setCMCWR(String CMCWR) {
+        this.CMCWR = CMCWR;
+    }
+
+    public int getCNSTC_YEAR() {
+        return CNSTC_YEAR;
+    }
+
+    public void setCNSTC_YEAR(int CNSTC_YEAR) {
+        this.CNSTC_YEAR = CNSTC_YEAR;
+    }
+
+    public String getINOUT_DOOR() {
+        return INOUT_DOOR;
+    }
+
+    public void setINOUT_DOOR(String INOUT_DOOR) {
+        this.INOUT_DOOR = INOUT_DOOR;
+    }
+
+    public String getREMARS3() {
+        return REMARS3;
+    }
+
+    public void setREMARS3(String REMARS3) {
+        this.REMARS3 = REMARS3;
+    }
+
+    public double getLAT() {
+        return LAT;
+    }
+
+    public void setLAT(double LAT) {
+        this.LAT = LAT;
+    }
+
+    public double getLNT() {
+        return LNT;
+    }
+
+    public void setLNT(double LNT) {
+        this.LNT = LNT;
+    }
+
+    public LocalDateTime getWORK_DTTM() {
+        return WORK_DTTM;
+    }
+
+    public void setWORK_DTTM(LocalDateTime WORK_DTTM) {
+        this.WORK_DTTM = WORK_DTTM;
     }
 }

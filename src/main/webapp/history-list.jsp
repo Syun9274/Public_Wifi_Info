@@ -1,3 +1,6 @@
+<%@ page import="com.zb_assignment.public_wifi_info.DAO.HistoryDAO" %>
+<%@ page import="com.zb_assignment.public_wifi_info.Entity.History" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -36,6 +39,21 @@
         }
     </style>
 
+    <script>
+        function deleteHistory(id) {
+            const params = new URLSearchParams({ id: id });
+
+            fetch('deleteHistory', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: params.toString()
+            })
+
+        }
+    </script>
+
     <title>와이파이 정보 구하기</title>
 </head>
 
@@ -51,23 +69,30 @@
 <table>
     <tr>
         <th>ID</th>
-        <th>X 좌표</th>
-        <th>Y 좌표</th>
+        <th>LAT</th>
+        <th>LNT</th>
         <th>조회일자</th>
         <th>비고</th>
     </tr>
 
-    <c:forEach var="history" items="${dataList}">
-        <tr>
-            <td>${history.id}</td>
-            <td>${history.xPos}</td>
-            <td>${history.yPos}</td>
-            <td>${history.date}</td>
-            <td class="center">
-                <button onclick="deleteHistory(${history.id})">삭제</button>
-            </td>
-        </tr>
-    </c:forEach>
+    <%
+        HistoryDAO historyDAO = new HistoryDAO();
+        List<History> dataList = historyDAO.getAllHistory();
+
+        for (History history : dataList) {
+    %>
+    <tr>
+        <td><%= history.getId() %></td>
+        <td><%= history.getLat() %></td>
+        <td><%= history.getLnt() %></td>
+        <td><%= history.getDate() %></td>
+        <td class="center">
+            <button onclick="deleteHistory(<%= history.getId() %>)">삭제</button>
+        </td>
+    </tr>
+    <%
+        }
+    %>
 
 </table>
 

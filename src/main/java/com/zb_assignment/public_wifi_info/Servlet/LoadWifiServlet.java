@@ -35,7 +35,8 @@ public class LoadWifiServlet extends HttpServlet {
         }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
         urlBuilder.append("/" + URLEncoder.encode(apiKey,"UTF-8") ); /*인증키*/
@@ -69,13 +70,8 @@ public class LoadWifiServlet extends HttpServlet {
 
         String listTotalCount = parseAndSaveData(sb.toString());
 
-        request.setAttribute("listTotalCount", listTotalCount);
-
-        // 캐시 무효화 설정
-        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        response.setHeader("Pragma", "no-cache");
-        response.setDateHeader("Expires", 0);
-        request.getRequestDispatcher("/load-wifi.jsp").forward(request,response);
+//        req.setAttribute("listTotalCount", listTotalCount);
+//        req.getRequestDispatcher("/load-wifi.jsp").forward(req, resp);
     }
 
     public String parseAndSaveData(String xmlContent) {

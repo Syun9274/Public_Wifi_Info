@@ -1,6 +1,6 @@
 package com.zb_assignment.public_wifi_info.service;
 
-import com.zb_assignment.public_wifi_info.dao.WifiDAO;
+import com.zb_assignment.public_wifi_info.temp_dao.WifiDAO;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

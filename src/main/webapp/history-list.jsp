@@ -1,5 +1,5 @@
-<%@ page import="com.zb_assignment.public_wifi_info.dao.HistoryDAO" %>
-<%@ page import="com.zb_assignment.public_wifi_info.entity.History" %>
+<%@ page import="com.zb_assignment.public_wifi_info.temp_dao.HistoryDAO" %>
+<%@ page import="com.zb_assignment.public_wifi_info.temp_entity.History" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

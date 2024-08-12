@@ -41,7 +41,6 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-/src/main/resources/META-INF/
 /src/main/java/com/zb_assignment/public_wifi_info/OpenAPI_Test.java
 /src/main/java/com/zb_assignment/public_wifi_info/HelloServlet.java
 /src/main/java/com/zb_assignment/public_wifi_info/TestClass.java

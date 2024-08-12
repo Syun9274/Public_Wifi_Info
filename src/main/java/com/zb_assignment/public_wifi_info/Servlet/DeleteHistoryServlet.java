@@ -1,6 +1,6 @@
-package com.zb_assignment.public_wifi_info.Servlet;
+package com.zb_assignment.public_wifi_info.servlet;
 
-import com.zb_assignment.public_wifi_info.DAO.HistoryDAO;
+import com.zb_assignment.public_wifi_info.dao.HistoryDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

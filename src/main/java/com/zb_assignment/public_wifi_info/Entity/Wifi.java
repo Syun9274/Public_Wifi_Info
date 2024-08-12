@@ -1,4 +1,4 @@
-package com.zb_assignment.public_wifi_info.Entity;
+package com.zb_assignment.public_wifi_info.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

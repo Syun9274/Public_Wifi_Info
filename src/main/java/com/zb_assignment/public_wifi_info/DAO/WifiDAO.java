@@ -1,6 +1,6 @@
-package com.zb_assignment.public_wifi_info.DAO;
+package com.zb_assignment.public_wifi_info.dao;
 
-import com.zb_assignment.public_wifi_info.Entity.Wifi;
+import com.zb_assignment.public_wifi_info.entity.Wifi;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

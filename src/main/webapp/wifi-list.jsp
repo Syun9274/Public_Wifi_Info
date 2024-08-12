@@ -1,5 +1,5 @@
-<%@ page import="com.zb_assignment.public_wifi_info.temp_dao.WifiDAO" %>
-<%@ page import="com.zb_assignment.public_wifi_info.temp_entity.Wifi" %>
+<%@ page import="com.zb_assignment.public_wifi_info.dao.WifiDAO" %>
+<%@ page import="com.zb_assignment.public_wifi_info.entity.Wifi" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>

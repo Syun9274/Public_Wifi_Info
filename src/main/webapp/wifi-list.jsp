@@ -108,6 +108,16 @@
     <button onclick="fetchWifiInfo()">와이파이 정보 가져오기</button>
 </div>
 
+<%
+    int pageSize = 20; // 한 페이지당 표시할 데이터 개수
+    int currentPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+
+    WifiDAO wifiDAO = new WifiDAO();
+    List<Wifi> dataList = wifiDAO.getAllWifi(currentPage, pageSize);
+    long totalWifiCount = wifiDAO.getWifiCount();
+    int totalPages = (int) Math.ceil((double) totalWifiCount / pageSize);
+%>
+
 <table>
     <tr>
         <th>거리(km)</th>
@@ -129,12 +139,7 @@
         <th>작업일자</th>
     </tr>
     <%
-        WifiDAO wifiDAO = new WifiDAO();
-        List<Wifi> dataList = wifiDAO.getAllWifi();
-
-        int count = 0;
         for (Wifi wifi : dataList) {
-            if (count >= 20) break;
     %>
     <tr>
         <td><%= 0.0 %></td>
@@ -156,10 +161,61 @@
         <td><%= wifi.getWORK_DTTM() %></td>
     </tr>
     <%
-            count++;
         }
     %>
 </table>
+
+<!-- 페이징 버튼 -->
+<div class="pagination">
+    <%
+        int maxPageLinks = 5; // 화면에 표시할 최대 페이지 수
+        int halfPageLinks = maxPageLinks / 2;
+        int startPage = Math.max(1, currentPage - halfPageLinks);
+        int endPage = Math.min(totalPages, startPage + maxPageLinks - 1);
+
+        // 만약 마지막 페이지가 totalPages보다 작을 경우, 시작 페이지를 조정
+        if (endPage - startPage < maxPageLinks - 1) {
+            startPage = Math.max(1, endPage - maxPageLinks + 1);
+        }
+    %>
+
+    <% if (currentPage > 1) { %>
+    <a href="?page=1">&laquo; 처음</a>
+    <a href="?page=<%= currentPage - 1 %>">&lt; 이전</a>
+    <% } %>
+
+    <% for (int i = startPage; i <= endPage; i++) { %>
+    <a href="?page=<%= i %>" class="<%= (i == currentPage) ? "active" : "" %>"><%= i %></a>
+    <% } %>
+
+    <% if (currentPage < totalPages) { %>
+    <a href="?page=<%= currentPage + 1 %>">다음 &gt;</a>
+    <a href="?page=<%= totalPages %>">마지막 &raquo;</a>
+    <% } %>
+</div>
+
+<!-- 스타일 추가 -->
+<style>
+    .pagination {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .pagination a {
+        display: inline-block;
+        padding: 8px 12px;
+        margin: 0 4px;
+        border: 1px solid #ddd;
+        text-decoration: none;
+        color: #333;
+    }
+
+    .pagination a.active {
+        background-color: #007bff;
+        color: white;
+        border: 1px solid #007bff;
+    }
+</style>
 
 </body>
 

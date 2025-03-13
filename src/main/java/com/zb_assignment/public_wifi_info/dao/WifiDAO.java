@@ -62,17 +62,36 @@ public class WifiDAO {
         }
     }
 
-    public List<Wifi> getAllWifi() {
+    // 전체 와이파이 불러오기
+    public List<Wifi> getAllWifi(int page, int pageSize) {
         EntityManager em = emf.createEntityManager();
         List<Wifi> dataList;
 
         try {
-            dataList = em.createQuery("select w from Wifi w", Wifi.class).getResultList();
+            dataList = em.createQuery("SELECT w FROM Wifi w", Wifi.class)
+                    .setFirstResult((page - 1) * pageSize) // 시작 인덱스 설정
+                    .setMaxResults(pageSize) // 페이지당 데이터 개수 설정
+                    .getResultList();
         } finally {
             em.close();
         }
 
         return dataList;
+    }
+
+    // 전체 와이파이 개수
+    public long getWifiCount() {
+        EntityManager em = emf.createEntityManager();
+        long count;
+
+        try {
+            count = em.createQuery("SELECT COUNT(w) FROM Wifi w", Long.class)
+                    .getSingleResult();
+        } finally {
+            em.close();
+        }
+
+        return count;
     }
 
     // 예제 데이터 삽입

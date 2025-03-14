@@ -39,3 +39,6 @@
     - `javax.servlet.ServletException`에 따르면 위의 2번 코드에서 예외가 발생했다고 한다.
 2. `load-wifi.jsp`에 접속하면 연동된 `LoadWifiServlet.java`가 무한루프에 빠진다.
    - 이때, OpenAPI 호출과 DB 데이터 삽입은 정상적으로 작동된다.
+  
+### 해결법
+어떻게 해결했을까? 그건 바로 [여기](https://tech-voyage.tistory.com/11)에서 확인 가능

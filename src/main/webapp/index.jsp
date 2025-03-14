@@ -35,7 +35,7 @@
 
   <script>
     function getLocation() {
-      if(navigator.geolocation) {
+      if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
       } else {
         alert("Geolocation not working")
@@ -51,7 +51,7 @@
     }
 
     function showError(error) {
-      switch(error.code) {
+      switch (error.code) {
         case error.PERMISSION_DENIED:
           alert("사용자가 위치 정보 제공을 거부했습니다.");
           break;
@@ -65,23 +65,15 @@
     }
 
     function fetchWifiInfo() {
-      const lat = document.getElementById("lat").value;
-      const lnt = document.getElementById("lnt").value;
+      let lat = document.getElementById("lat").value.trim();
+      let lnt = document.getElementById("lnt").value.trim();
 
-      const params = new URLSearchParams({ lat, lnt });
+      // 값 확인 (콘솔 출력)
+      console.log("Latitude:", lat);
+      console.log("Longitude:", lnt);
 
-      fetch('fetchWifiInfo', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: params.toString()
-      })
-      // .then(response => response.text())
-      // .then(data => alert(data))
-      // .catch(error => console.error('Error:', error));
-
-      window.location.href = 'wifi-list.jsp';
+      // URL에 위도, 경도를 포함하여 페이지 이동
+      window.location.href = "wifi-list.jsp?page=1&lat=" + lat + "&lnt=" + lnt;
     }
   </script>
 

@@ -78,7 +78,7 @@
             if (!lnt) lnt = "0.0";
 
             // URL에 위도, 경도를 포함하여 페이지 이동
-            window.location.href = `wifi-list.jsp?page=1&lat=${lat}&lnt=${lnt}`;
+            window.location.href = "wifi-list.jsp?page=1&lat=" + lat + "&lnt=" + lnt;
         }
     </script>
     <title>와이파이 정보 구하기</title>

@@ -65,12 +65,22 @@
     }
 
     function fetchWifiInfo() {
-      let lat = document.getElementById("lat").value.trim();
-      let lnt = document.getElementById("lnt").value.trim();
+      let lat = document.getElementById("lat").value;
+      let lnt = document.getElementById("lnt").value;
 
-      // 값 확인 (콘솔 출력)
-      console.log("Latitude:", lat);
-      console.log("Longitude:", lnt);
+      // 빈 값일 경우 기본값 0.0 설정
+      if (!lat) lat = "0.0";
+      if (!lnt) lnt = "0.0";
+
+      const params = new URLSearchParams({ lat, lnt });
+
+      fetch('fetchWifiInfo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params.toString()
+      })
 
       // URL에 위도, 경도를 포함하여 페이지 이동
       window.location.href = "wifi-list.jsp?page=1&lat=" + lat + "&lnt=" + lnt;

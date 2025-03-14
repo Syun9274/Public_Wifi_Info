@@ -77,6 +77,16 @@
             if (!lat) lat = "0.0";
             if (!lnt) lnt = "0.0";
 
+            const params = new URLSearchParams({ lat, lnt });
+
+            fetch('fetchWifiInfo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: params.toString()
+            })
+
             // URL에 위도, 경도를 포함하여 페이지 이동
             window.location.href = "wifi-list.jsp?page=1&lat=" + lat + "&lnt=" + lnt;
         }

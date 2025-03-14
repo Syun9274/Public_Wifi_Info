@@ -1,11 +1,13 @@
 package com.zb_assignment.public_wifi_info.dao;
 
+import com.zb_assignment.public_wifi_info.component.DistanceCalculator;
 import com.zb_assignment.public_wifi_info.entity.Wifi;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 public class WifiDAO {
@@ -77,6 +79,41 @@ public class WifiDAO {
         }
 
         return dataList;
+    }
+
+    /**
+     * 가까운 순으로 정렬하여 반환
+     *
+     * @param lat 위도
+     * @param lnt 경도
+     * @param page 페이지
+     * @param pageSize 페이지 크기
+     * @return List[Wi-Fi]
+     */
+    public List<Wifi> getNearbyWifi(double lat, double lnt, int page, int pageSize) {
+        EntityManager em = emf.createEntityManager();
+        List<Wifi> wifiList;
+
+        try {
+            wifiList = em.createQuery("SELECT w FROM Wifi w", Wifi.class).getResultList();
+        } finally {
+            em.close();
+        }
+
+        // 거리 계산 후 거리 값을 `setDistance()`로 저장
+        for (Wifi wifi : wifiList) {
+            double distance = DistanceCalculator.calculateDistance(lat, lnt, wifi.getLAT(), wifi.getLNT());
+            wifi.setDistance(distance);
+        }
+
+        // 거리 기준으로 정렬
+        wifiList.sort(Comparator.comparingDouble(w -> w.getDistance() == 0.0 ? Double.MAX_VALUE : w.getDistance()));
+
+        // 페이지네이션 적용
+        int fromIndex = (page - 1) * pageSize;
+        int toIndex = Math.min(fromIndex + pageSize, wifiList.size());
+
+        return wifiList.subList(fromIndex, toIndex);
     }
 
     // 전체 와이파이 개수

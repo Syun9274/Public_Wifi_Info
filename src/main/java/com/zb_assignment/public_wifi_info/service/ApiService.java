@@ -99,33 +99,33 @@ public class ApiService {
             // 모든 <row> 엘리먼트를 가져옴
             NodeList nodeList = doc.getElementsByTagName("row");
 
-            // 각 <row> 엘리먼트에 대해 필요한 데이터 추출 및 저장
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
 
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
 
-                    // 필요한 데이터 추출
-                    String mgrNo = element.getElementsByTagName("X_SWIFI_MGR_NO").item(0).getTextContent();
-                    String wrdofc = element.getElementsByTagName("X_SWIFI_WRDOFC").item(0).getTextContent();
-                    String mainNm = element.getElementsByTagName("X_SWIFI_MAIN_NM").item(0).getTextContent();
-                    String adres1 = element.getElementsByTagName("X_SWIFI_ADRES1").item(0).getTextContent();
-                    String adres2 = element.getElementsByTagName("X_SWIFI_ADRES2").item(0).getTextContent();
-                    String instlFloor = element.getElementsByTagName("X_SWIFI_INSTL_FLOOR").item(0).getTextContent();
-                    String instlTy = element.getElementsByTagName("X_SWIFI_INSTL_TY").item(0).getTextContent();
-                    String instlMby = element.getElementsByTagName("X_SWIFI_INSTL_MBY").item(0).getTextContent();
-                    String svcSe = element.getElementsByTagName("X_SWIFI_SVC_SE").item(0).getTextContent();
-                    String cmcwr = element.getElementsByTagName("X_SWIFI_CMCWR").item(0).getTextContent();
-                    int cnstcYear = Integer.parseInt(element.getElementsByTagName("X_SWIFI_CNSTC_YEAR").item(0).getTextContent());
-                    String inoutDoor = element.getElementsByTagName("X_SWIFI_INOUT_DOOR").item(0).getTextContent();
-                    String remars3 = element.getElementsByTagName("X_SWIFI_REMARS3").item(0).getTextContent();
-                    double lat = Double.parseDouble(element.getElementsByTagName("LAT").item(0).getTextContent());
-                    double lnt = Double.parseDouble(element.getElementsByTagName("LNT").item(0).getTextContent());
+                    // 데이터 추출 (Null 체크 포함)
+                    String mgrNo = getTextContentOrDefault(element, "X_SWIFI_MGR_NO", "N/A");
+                    String wrdofc = getTextContentOrDefault(element, "X_SWIFI_WRDOFC", "N/A");
+                    String mainNm = getTextContentOrDefault(element, "X_SWIFI_MAIN_NM", "N/A");
+                    String adres1 = getTextContentOrDefault(element, "X_SWIFI_ADRES1", "N/A");
+                    String adres2 = getTextContentOrDefault(element, "X_SWIFI_ADRES2", "");
+                    String instlFloor = getTextContentOrDefault(element, "X_SWIFI_INSTL_FLOOR", "");
+                    String instlTy = getTextContentOrDefault(element, "X_SWIFI_INSTL_TY", "N/A");
+                    String instlMby = getTextContentOrDefault(element, "X_SWIFI_INSTL_MBY", "N/A");
+                    String svcSe = getTextContentOrDefault(element, "X_SWIFI_SVC_SE", "N/A");
+                    String cmcwr = getTextContentOrDefault(element, "X_SWIFI_CMCWR", "N/A");
+                    int cnstcYear = Integer.parseInt(getTextContentOrDefault(element, "X_SWIFI_CNSTC_YEAR", "0"));
+                    String inoutDoor = getTextContentOrDefault(element, "X_SWIFI_INOUT_DOOR", "N/A");
+                    String remars3 = getTextContentOrDefault(element, "X_SWIFI_REMARS3", null);
+                    double lat = Double.parseDouble(getTextContentOrDefault(element, "LAT", "0.0"));
+                    double lnt = Double.parseDouble(getTextContentOrDefault(element, "LNT", "0.0"));
 
-                    // 날짜 형식 맞추기
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
-                    LocalDateTime workDttm = LocalDateTime.parse(element.getElementsByTagName("WORK_DTTM").item(0).getTextContent(), formatter);
+                    // 날짜 형식 변환
+                    String workDttmStr = getTextContentOrDefault(element, "WORK_DTTM", "2000-01-01 00:00:00.0");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss[.S]");
+                    LocalDateTime workDttm = LocalDateTime.parse(workDttmStr, formatter);
 
                     // 데이터베이스에 저장
                     wifiDAO.saveWifi(mgrNo, wrdofc, mainNm, adres1, adres2, instlFloor, instlTy, instlMby, svcSe, cmcwr, cnstcYear, inoutDoor, remars3, lat, lnt, workDttm);
@@ -134,5 +134,13 @@ public class ApiService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // XML 태그 값이 없을 경우 기본값을 반환하는 함수
+    private String getTextContentOrDefault(Element element, String tagName, String defaultValue) {
+        NodeList nodeList = element.getElementsByTagName(tagName);
+        return (nodeList.getLength() > 0 && nodeList.item(0) != null)
+                ? nodeList.item(0).getTextContent()
+                : defaultValue;
     }
 }

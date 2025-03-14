@@ -118,13 +118,7 @@
     <th>설치유형</th>
     <th>설치기관</th>
     <th>서비스구분</th>
-    <th>망 종류</th>
-    <th>설치년도</th>
     <th>실내외구분</th>
-    <th>WIFI 접속환경</th>
-    <th>LAT</th>
-    <th>LNT</th>
-    <th>작업일자</th>
   </tr>
   <tr>
     <td colspan="17">위치 정보를 입력한 후에 조회해 주세요</td>

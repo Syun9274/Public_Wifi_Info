@@ -3,6 +3,7 @@ package com.zb_assignment.public_wifi_info.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.time.LocalDateTime;
 
 @Entity
@@ -58,6 +59,9 @@ public class Wifi {
     // 작업일자
     private LocalDateTime WORK_DTTM;
 
+    // 거리 필드 (DB에는 저장되지 않음)
+    @Transient
+    private double distance;
 
     public String getMGR_NO() {
         return MGR_NO;
@@ -185,5 +189,13 @@ public class Wifi {
 
     public void setWORK_DTTM(LocalDateTime WORK_DTTM) {
         this.WORK_DTTM = WORK_DTTM;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 }
